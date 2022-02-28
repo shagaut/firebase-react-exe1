@@ -11,7 +11,12 @@ function AddTask({ onClose, open }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(/* À faire */);
+      await addDoc(collection(db, "tasks"), {
+        title: title,
+        description: description,
+        completed: false,
+        created: Timestamp.now(),
+      });
       // objet sous cette forme:
       // {
       //   title: title,
