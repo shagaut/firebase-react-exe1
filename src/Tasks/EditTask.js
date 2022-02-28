@@ -11,9 +11,11 @@ function EditTask({ open, onClose, toEditTitle, toEditDescription, id }) {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      // À faire
-      // update seulement les membres title et description
-      // Utiliser les states *title* et *description*
+      const taskRef = doc(db, "tasks", id);
+      await updateDoc(taskRef, {
+        title: title,
+        description: description,
+      });
       onClose();
     } catch (err) {
       alert(err);
