@@ -17,7 +17,7 @@ function Task({ id, title, description, completed }) {
     try {
       const taskRef = doc(db, "tasks", id);
       await updateDoc(taskRef, {
-        completed: true,
+        completed: checked,
       });
     } catch (err) {
       alert(err);
