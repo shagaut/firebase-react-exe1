@@ -25,7 +25,7 @@ function Task({ id, title, description, completed }) {
 
   const handleDelete = async () => {
     try {
-      // à faire
+      await deleteDoc(doc(db, "tasks", id));
     } catch (err) {
       alert(err);
     }
