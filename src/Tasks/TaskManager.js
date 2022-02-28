@@ -14,8 +14,12 @@ function TaskManager() {
       collection(db, "tasks"),
       orderBy("created", "desc")
     );
-    onSnapshot(taskColRef, (doc) => {
-      setTasks(doc.data());
+    onSnapshot(taskColRef, (snapshot) => {
+      const listeTasks = [];
+      snapshot.docs.map((doc) => {
+        listeTasks.push(doc);
+      });
+      setTasks(listeTasks);
     });
   }, []);
 
@@ -29,9 +33,9 @@ function TaskManager() {
             <Task
               id={task.id}
               key={task.id}
-              completed={task.data.completed}
-              title={task.data.title}
-              description={task.data.description}
+              completed={task.data().completed}
+              title={task.data().title}
+              description={task.data().description}
             />
           ))}
         </div>
