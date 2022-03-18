@@ -7,35 +7,34 @@ import AddTask from "./AddTask";
 
 function TaskManager() {
   const [openAddModal, setOpenAddModal] = useState(false);
-  const [tasks, setTasks] = useState([]);
+  const [quest, setQuest] = useState([]);
 
   useEffect(() => {
-    const taskColRef = query(
-      collection(db, "tasks"),
-      orderBy("created", "desc")
-    );
+    const taskColRef = query(collection(db, "adventure"));
     onSnapshot(taskColRef, (snapshot) => {
-      const listeTasks = [];
+      const listeQuest = [];
       snapshot.docs.map((doc) => {
-        listeTasks.push(doc);
+        listeQuest.push(doc);
       });
-      setTasks(listeTasks);
+      setQuest(listeQuest);
     });
   }, []);
 
   return (
     <div className="taskManager">
-      <header>Task Manager</header>
+      <header>Quest Manager</header>
+
       <div className="taskManager__container">
-        <button onClick={() => setOpenAddModal(true)}>Add task +</button>
+        <button>Enregistrer/Connexion</button>
+        <button onClick={() => setOpenAddModal(true)}>Add Quest +</button>
         <div className="taskManager__tasks">
-          {tasks.map((task) => (
+          {quest.map((quest) => (
             <Task
-              id={task.id}
-              key={task.id}
-              completed={task.data().completed}
-              title={task.data().title}
-              description={task.data().description}
+              id={quest.id}
+              key={quest.id}
+              completed={quest.data().completed}
+              questName={quest.data().questName}
+              userID={quest.data().userID}
             />
           ))}
         </div>

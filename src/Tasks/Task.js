@@ -5,7 +5,7 @@ import EditTask from "./EditTask";
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
-function Task({ id, title, description, completed }) {
+function Task({ id, questName, userID, completed }) {
   const [checked, setChecked] = useState(completed);
   const [open, setOpen] = useState({ edit: false, view: false });
 
@@ -15,7 +15,7 @@ function Task({ id, title, description, completed }) {
 
   const handleChange = async () => {
     try {
-      const taskRef = doc(db, "tasks", id);
+      const taskRef = doc(db, "adventure", id);
       await updateDoc(taskRef, {
         completed: checked,
       });
@@ -26,7 +26,7 @@ function Task({ id, title, description, completed }) {
 
   const handleDelete = async () => {
     try {
-      await deleteDoc(doc(db, "tasks", id));
+      await deleteDoc(doc(db, "adventure", id));
     } catch (err) {
       alert(err);
     }
@@ -50,8 +50,8 @@ function Task({ id, title, description, completed }) {
         ></label>
       </div>
       <div className="task__body">
-        <h2>{title}</h2>
-        <p>{description}</p>
+        <h2>Nom de quête: {questName}</h2>
+        <p>UserID: {userID}</p>
         <div className="task__buttons">
           <div className="task__deleteNedit">
             <button
@@ -71,8 +71,8 @@ function Task({ id, title, description, completed }) {
       {open.view && (
         <TaskItem
           onClose={handleClose}
-          title={title}
-          description={description}
+          questName={questName}
+          userID={userID}
           open={open.view}
         />
       )}
@@ -80,8 +80,8 @@ function Task({ id, title, description, completed }) {
       {open.edit && (
         <EditTask
           onClose={handleClose}
-          toEditTitle={title}
-          toEditDescription={description}
+          toEditTitle={questName}
+          toEditDescription={userID}
           open={open.edit}
           id={id}
         />

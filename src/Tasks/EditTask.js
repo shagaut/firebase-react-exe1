@@ -5,16 +5,16 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 function EditTask({ open, onClose, toEditTitle, toEditDescription, id }) {
-  const [title, setTitle] = useState(toEditTitle);
-  const [description, setDescription] = useState(toEditDescription);
+  const [questName, setQuestName] = useState(toEditTitle);
+  const [userID, setUserID] = useState(toEditDescription);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
       const taskRef = doc(db, "tasks", id);
       await updateDoc(taskRef, {
-        title: title,
-        description: description,
+        title: questName,
+        description: userID,
       });
       onClose();
     } catch (err) {
@@ -28,12 +28,12 @@ function EditTask({ open, onClose, toEditTitle, toEditDescription, id }) {
         <input
           type="text"
           name="title"
-          onChange={(e) => setTitle(e.target.value.toUpperCase())}
-          value={title}
+          onChange={(e) => setQuestName(e.target.value.toUpperCase())}
+          value={questName}
         />
         <textarea
-          onChange={(e) => setDescription(e.target.value)}
-          value={description}
+          onChange={(e) => setUserID(e.target.value)}
+          value={userID}
         ></textarea>
         <button type="submit">Edit</button>
       </form>

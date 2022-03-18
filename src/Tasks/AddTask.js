@@ -5,17 +5,16 @@ import { db } from "../firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 function AddTask({ onClose, open }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [questName, setQuestName] = useState("");
+  const [userID, setUserID] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, "tasks"), {
-        title: title,
-        description: description,
+      await addDoc(collection(db, "adventure"), {
+        questName: questName,
+        userID: userID,
         completed: false,
-        created: Timestamp.now(),
       });
       // objet sous cette forme:
       // {
@@ -31,20 +30,21 @@ function AddTask({ onClose, open }) {
   };
 
   return (
-    <Modal modalLable="Add Task" onClose={onClose} open={open}>
+    <Modal modalLable="Add Quest" onClose={onClose} open={open}>
       <form onSubmit={handleSubmit} className="addTask" name="addTask">
         <input
           type="text"
           name="title"
-          onChange={(e) => setTitle(e.target.value.toUpperCase())}
-          value={title}
-          placeholder="Enter title"
+          onChange={(e) => setQuestName(e.target.value)}
+          value={questName}
+          placeholder="Enter Quest Name"
         />
-        <textarea
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Enter task decription"
-          value={description}
-        ></textarea>
+        <input
+          type="text"
+          onChange={(e) => setUserID(e.target.value)}
+          placeholder="Enter User ID"
+          value={userID}
+        ></input>
         <button type="submit">Done</button>
       </form>
     </Modal>
